@@ -95,7 +95,7 @@ function Programs() {
               <h3>{event.name}</h3>
               <p><strong>Date:</strong> {event.date}</p>
               <p><strong>Description:</strong> {event.description}</p>
-              <button onClick={() => joinEvent(event.id)}>Join Event</button>
+              <button onClick={() => window.location.href = `/event/${event.id}`}>Join Event</button>
             </div>
           </div>
         ))}

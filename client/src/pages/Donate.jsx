@@ -1,26 +1,26 @@
 import React, { useState } from "react";
-import axios from "axios";
-import "../index.css"; // Link to custom CSS
+import "../index.css";
+
+const programs = [
+  "Skill Training for Women",
+  "Health & Hygiene Awareness",
+  "Entrepreneurship Workshop",
+  "Digital Literacy Camp",
+  "Legal Rights & Safety Session",
+  "Education for All"
+];
+
+function getInitialProgram() {
+  const params = new URLSearchParams(window.location.search);
+  return params.get("program") || programs[0];
+}
 
 function Donate() {
-  const [name, setName] = useState("");
-  const [amount, setAmount] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [success, setSuccess] = useState(false);
-
-  const handleDonate = async () => {
-    if (!name.trim() || !amount.trim()) return alert("Please fill in all fields");
-    setLoading(true);
-    try {
-      await axios.post("http://localhost:5000/api/donate", { name, amount });
-      setSuccess(true);
-      setName("");
-      setAmount("");
-    } catch (err) {
-      alert("Something went wrong. Please try again.");
-    }
-    setLoading(false);
-  };
+  // Replace with your Google Form link and UPI details
+  const googleFormUrl = "https://docs.google.com/forms/d/e/1FAIpQLSezOJiW7OF2_vh5-hesXafkvRT5VnZQO1_yNizS0ow71OemwA/viewform?usp=dialog"; // <-- Replace with your actual Google Form link
+  const upiId = "shwethasivakumar9@oksbi";
+  const upiQrImage = require("../assets/qr.jpg"); // Place your QR code in assets/qr.jpg
+  const [selectedProgram, setSelectedProgram] = useState(getInitialProgram());
 
   return (
     <div className="donate-container">
@@ -28,44 +28,31 @@ function Donate() {
         <div className="donate-banner">
           <h1>Support Our Mission</h1>
         </div>
-
         <div className="donate-content">
           <p className="donate-message">
-            Every rupee you give powers skill‑training, education and healthcare
+            Every rupee you give powers skill-training, education, and healthcare
             for women in underserved communities.
           </p>
-
-          {success && (
-            <div className="donate-success">
-              Thank you for your generous donation! 💖
-            </div>
-          )}
-
-          <label htmlFor="donorName">Your Name</label>
-          <input
-            id="donorName"
-            type="text"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            placeholder="Shwetha"
-          />
-
-          <label htmlFor="amount">Amount (₹)</label>
-          <input
-            id="amount"
-            type="number"
-            min="1"
-            value={amount}
-            onChange={(e) => setAmount(e.target.value)}
-            placeholder="500"
-          />
-
-          <button onClick={handleDonate} disabled={loading}>
-            {loading ? "Processing…" : "Donate Now"}
-          </button>
-
+          <h3>Step 1: Choose a Program</h3>
+          <select value={selectedProgram} onChange={e => setSelectedProgram(e.target.value)} style={{width:'100%',padding:'10px',marginBottom:'18px',borderRadius:'8px'}}>
+            {programs.map((prog, idx) => (
+              <option key={idx} value={prog}>{prog}</option>
+            ))}
+          </select>
+          <h3>Step 2: Fill the Donor Details</h3>
+          <a href={googleFormUrl} target="_blank" rel="noopener noreferrer">
+            <button style={{ padding: "10px 20px", fontSize: "16px", marginBottom: 20 }}>
+              Fill Google Form
+            </button>
+          </a>
+          <h3>Step 3: Make Your Donation</h3>
+          <p>UPI ID: <strong>{upiId}</strong></p>
+          <p>Scan the QR code below using any UPI app (GPay, PhonePe, Paytm, etc.)</p>
+          <img src={upiQrImage} alt="UPI QR" style={{ width: 200, marginBottom: 20 }} />
           <p className="donate-note">
-            100% of your contribution goes directly to program costs.
+            100% of your contribution goes directly to program costs.<br/>
+            Please fill the form and make the payment to help us send you a receipt.<br/>
+            <b>Selected Program:</b> {selectedProgram}
           </p>
         </div>
       </div>
