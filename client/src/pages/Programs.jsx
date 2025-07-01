@@ -62,12 +62,6 @@ function Programs() {
     setEvents(dummyEvents);
   }, []);
 
-  const joinEvent = (eventId) => {
-    if (!name) return alert("Please enter your name before joining.");
-    alert(`Successfully joined the event: ${eventId}`);
-    setName("");
-  };
-
   return (
     <div className="programs-container">
       <header className="programs-header">

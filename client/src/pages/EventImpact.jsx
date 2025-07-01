@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { useParams } from "react-router-dom";
 import "../index.css";
 
@@ -74,12 +74,6 @@ const eventData = {
 
 function EventImpact() {
   const { eventId } = useParams();
-  const [donorName, setDonorName] = useState("");
-  const [amount, setAmount] = useState("");
-  const [success, setSuccess] = useState(false);
-  const [language, setLanguage] = useState("en");
-  const [translated, setTranslated] = useState(null);
-
   const event = eventData[eventId] || {
     name: "Sample Event",
     description: "This event empowers women through skill training and support.",
@@ -87,68 +81,17 @@ function EventImpact() {
     impact: []
   };
 
-  // Simulated translation function (replace with real API call)
-  const translateText = (text, lang) => {
-    const translations = {
-      hi: "(हिंदी में अनुवादित)",
-      ta: "(தமிழில் மொழிபெயர்க்கப்பட்டது)",
-      ml: "(മലയാളത്തിൽ വിവർത്തനം ചെയ്തത്)",
-      kn: "(ಕನ್ನಡದಲ್ಲಿ ಅನುವಾದಿಸಲಾಗಿದೆ)",
-      te: "(తెలుగులో అనువదించబడింది)",
-      en: ""
-    };
-    return text + " " + (translations[lang] || "");
-  };
-
-  const handleTranslate = () => {
-    setTranslated({
-      name: translateText(event.name, language),
-      description: translateText(event.description, language),
-      date: event.date,
-      impact: event.impact.map(item => ({
-        label: translateText(item.label, language),
-        value: item.value
-      }))
-    });
-  };
-
-  const handleLanguageChange = (e) => {
-    setLanguage(e.target.value);
-    setTranslated(null); // Reset translation when language changes
-  };
-
-  const displayEvent = translated || event;
-
-  const handleDonate = () => {
-    window.location.href = "/donate?program=" + encodeURIComponent(event.name);
-  };
-
   return (
     <div className="event-impact-container">
-      
-      <h2>{displayEvent.name}</h2>
-      <p><strong>Date:</strong> {displayEvent.date}</p>
-      <p>{displayEvent.description}</p>
-      <h3>Event Impact</h3>
-      <div className="impact-visualization">
-        {displayEvent.impact && displayEvent.impact.length > 0 ? (
-          displayEvent.impact.map((item, idx) => (
-            <div key={idx} className="impact-bar">
-              <span>{item.label}</span>
-              <div className="bar-bg">
-                <div className="bar-fill" style={{ width: `${item.value}%` }}></div>
-              </div>
-              <span className="bar-value">{item.value}</span>
-            </div>
-          ))
-        ) : (
-          <div style={{ color: 'gray', fontStyle: 'italic' }}>No impact data available.</div>
-        )}
-      </div>
-      <div className="event-donate-form">
-        <h4>Join & Donate for this Event</h4>
-        <button onClick={handleDonate}>Donate for this Event</button>
-      </div>
+      <h2>{event.name}</h2>
+      <p>{event.description}</p>
+      <p>Date: {event.date}</p>
+      <h3>Impact</h3>
+      <ul>
+        {event.impact.map((item, idx) => (
+          <li key={idx}>{item.label}: {item.value}</li>
+        ))}
+      </ul>
     </div>
   );
 }

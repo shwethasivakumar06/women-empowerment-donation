@@ -14,10 +14,10 @@ function Signup() {
       setError("Please fill all fields");
       return;
     }
-    // Store both email and password for demo (not secure for real apps)
+    // Store user for demo (not secure for real apps)
     localStorage.setItem("user", JSON.stringify({ email, password }));
-    localStorage.setItem("loggedIn", "true");
-    navigate("/");
+    // Do NOT set any loggedIn or persistent login flag
+    navigate("/login"); // After signup, go to login page
   };
 
   return (
