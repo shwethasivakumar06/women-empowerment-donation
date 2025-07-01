@@ -1,42 +1,12 @@
-import React, { useEffect } from "react";
-import "../index.css";
+
 import videoBg from "../assets/intro.mp4";
 import women1 from "../assets/women1.jpg";
 import women2 from "../assets/women2.jpg";
 import women3 from "../assets/women3.jpg";
 
 function Home() {
-  useEffect(() => {
-    // Prevent loading the script multiple times
-    if (!window.googleTranslateElementInit) {
-      window.googleTranslateElementInit = () => {
-        new window.google.translate.TranslateElement(
-          {
-            pageLanguage: "en",
-            includedLanguages:
-              "en,hi,ta,te,kn,ml,bn,gu,mr,pa,ur,or,ne,fr,de,es,ar,zh-CN,ja,ko,ru",
-            layout: window.google.translate.TranslateElement.InlineLayout.HORIZONTAL,
-          },
-          "google_translate_element"
-        );
-      };
-
-      const script = document.createElement("script");
-      script.src =
-        "//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit";
-      script.type = "text/javascript";
-      document.body.appendChild(script);
-    }
-  }, []);
-
   return (
     <div className="home-wrapper">
-      {/* Language selector (only one will be loaded due to check above) */}
-      <div
-        id="google_translate_element"
-        style={{ textAlign: "right", padding: "10px" }}
-      ></div>
-
       <header className="video-header">
         <video autoPlay loop muted playsInline>
           <source src={videoBg} type="video/mp4" />
@@ -91,7 +61,7 @@ function Home() {
       <section className="cta">
         <h2>Be Part of the Movement</h2>
         <p>Support us through donations, volunteering, and advocacy.</p>
-        <button onClick={() => (window.location.href = "/donate")}>
+        <button onClick={() => (window.location.href = "/donate")}> 
           Join Now
         </button>
       </section>

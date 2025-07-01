@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from "react";
 import { HashRouter as Router, Route, Routes, Link, Navigate } from "react-router-dom";
 import Home from "./pages/Home";
@@ -11,8 +12,25 @@ import './index.css';
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(() => localStorage.getItem("loggedIn") === "true");
 
+  // Google Translate loader: load only once for the whole app
   useEffect(() => {
-    setIsAuthenticated(localStorage.getItem("loggedIn") === "true");
+    if (!window.googleTranslateElementInit) {
+      window.googleTranslateElementInit = () => {
+        new window.google.translate.TranslateElement(
+          {
+            pageLanguage: "en",
+            includedLanguages:
+              "en,hi,ta,te,kn,ml,bn,gu,mr,pa,ur,or,ne,fr,de,es,ar,zh-CN,ja,ko,ru",
+            layout: window.google.translate.TranslateElement.InlineLayout.HORIZONTAL,
+          },
+          "google_translate_element"
+        );
+      };
+      const script = document.createElement("script");
+      script.src = "//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit";
+      script.type = "text/javascript";
+      document.body.appendChild(script);
+    }
   }, []);
 
   return (
@@ -24,6 +42,8 @@ function App() {
             <Link to="/">Home</Link>
             <Link to="/programs">Programs</Link>
             <Link to="/donate">Donate</Link>
+            {/* Google Translate widget in navbar */}
+            <div id="google_translate_element" style={{ marginLeft: 'auto' }}></div>
             <button
               style={{ marginLeft: 16, background: '#e53935', color: '#fff', border: 'none', borderRadius: 4, padding: '6px 12px', cursor: 'pointer' }}
               onClick={() => {
