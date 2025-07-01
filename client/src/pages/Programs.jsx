@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "../index.css";
 
 // Importing local images
@@ -10,9 +11,11 @@ import eventImage4 from "../assets/women3.jpg";
 import eventImage5 from "../assets/hello.jpg";
 import eventImage6 from "../assets/women1.jpg";
 
+
 function Programs() {
   const [events, setEvents] = useState([]);
   const [name, setName] = useState("");
+  const navigate = useNavigate();
 
   useEffect(() => {
     const dummyEvents = [
@@ -89,7 +92,7 @@ function Programs() {
               <h3>{event.name}</h3>
               <p><strong>Date:</strong> {event.date}</p>
               <p><strong>Description:</strong> {event.description}</p>
-              <button onClick={() => window.location.href = `/event/${event.id}`}>Join Event</button>
+              <button onClick={() => navigate("/donate")}>Join Event</button>
             </div>
           </div>
         ))}

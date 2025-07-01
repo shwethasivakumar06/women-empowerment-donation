@@ -1,10 +1,13 @@
 
+
+import { useNavigate } from "react-router-dom";
 import videoBg from "../assets/intro.mp4";
 import women1 from "../assets/women1.jpg";
 import women2 from "../assets/women2.jpg";
 import women3 from "../assets/women3.jpg";
 
 function Home() {
+  const navigate = useNavigate();
   return (
     <div className="home-wrapper">
       <header className="video-header">
@@ -61,7 +64,7 @@ function Home() {
       <section className="cta">
         <h2>Be Part of the Movement</h2>
         <p>Support us through donations, volunteering, and advocacy.</p>
-        <button onClick={() => (window.location.href = "/donate")}> 
+        <button onClick={() => navigate("/programs")}> 
           Join Now
         </button>
       </section>
